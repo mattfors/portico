@@ -1,0 +1,57 @@
+<div class="workspace-shell">
+  <!-- Collapsible Sidebar -->
+  <div class="sidebar" [class.collapsed]="sidebarCollapsed">
+    <div class="sidebar-header">
+      <div class="flex align-items-center gap-2">
+        <i class="pi pi-box" style="color: #4caf50"></i>
+        <span class="font-semibold" *ngIf="!sidebarCollapsed">Portico</span>
+      </div>
+      <button
+        pButton
+        [icon]="sidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'"
+        [text]="true"
+        (click)="sidebarCollapsed = !sidebarCollapsed"
+        pTooltip="Toggle sidebar"
+      ></button>
+    </div>
+
+    <div class="sidebar-content" *ngIf="!sidebarCollapsed">
+      <!-- Search Box -->
+      <div class="flex gap-2 mb-3">
+        <span class="p-input-icon-left flex-1">
+          <i class="pi pi-search"></i>
+          <input
+            type="text"
+            pInputText
+            [(ngModel)]="searchText"
+            (keyup.enter)="onSearch()"
+            placeholder="Search menu..."
+            class="w-full"
+          />
+        </span>
+        <button
+          *ngIf="searchText"
+          pButton
+          icon="pi pi-times"
+          [text]="true"
+          severity="secondary"
+          (click)="clearSearch()"
+          pTooltip="Clear search"
+        ></button>
+      </div>
+
+      <!-- Menu Tree -->
+      <p-tree
+        [value]="menuItems"
+        selectionMode="single"
+        (onNodeSelect)="onNodeSelect($event)"
+        [filter]="false"
+      />
+    </div>
+  </div>
+
+  <!-- Main Workspace -->
+  <div class="workspace">
+    <div id="dockview-container" class="dockview-container"></div>
+  </div>
+</div>
