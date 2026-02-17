@@ -1,0 +1,93 @@
+{
+  "name": "Portico Angular Nx Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Angular
+        "angular.ng-template",
+        
+        // TypeScript
+        "ms-vscode.vscode-typescript-next",
+        
+        // Code quality
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        
+        // Nx
+        "nrwl.angular-console",
+        
+        // Git
+        "eamodio.gitlens",
+        
+        // Utilities
+        "christian-kohler.path-intellisense",
+        "visualstudioexptteam.vscodeintellicode",
+        "usernamehw.errorlens",
+        
+        // SCSS
+        "syler.sass-indented",
+        
+        // JSON
+        "ZainChen.json"
+      ],
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[scss]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true
+      }
+    }
+  },
+
+  "forwardPorts": [
+    4200,
+    4201,
+    4202,
+    4203
+  ],
+
+  "portsAttributes": {
+    "4200": {
+      "label": "Showcase App",
+      "onAutoForward": "notify"
+    },
+    "4201": {
+      "label": "Additional App",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "postCreateCommand": "npm install",
+
+  "remoteUser": "node",
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/.git,target=/workspaces/portico/.git,type=bind,consistency=cached"
+  ],
+
+  "runArgs": [
+    "--name=portico-dev"
+  ]
+}
