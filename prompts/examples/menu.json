@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "nodes": [
+    {
+      "id": "inventory",
+      "label": "Inventory",
+      "icon": "pi-box",
+      "type": "canonical",
+      "children": [
+        {
+          "id": "inventory-search",
+          "label": "Search",
+          "icon": "pi-search",
+          "type": "canonical"
+        },
+        {
+          "id": "inventory-receive",
+          "label": "Receive",
+          "icon": "pi-plus-circle",
+          "type": "canonical"
+        },
+        {
+          "id": "inventory-adjust",
+          "label": "Adjust",
+          "icon": "pi-pencil",
+          "type": "canonical"
+        }
+      ]
+    },
+    {
+      "id": "orders",
+      "label": "Orders",
+      "icon": "pi-shopping-cart",
+      "type": "canonical",
+      "children": [
+        {
+          "id": "order-search",
+          "label": "Search Orders",
+          "icon": "pi-search",
+          "type": "canonical"
+        },
+        {
+          "id": "order-create",
+          "label": "Create Order",
+          "icon": "pi-plus",
+          "type": "canonical"
+        }
+      ]
+    },
+    {
+      "id": "shipping",
+      "label": "Shipping",
+      "icon": "pi-truck",
+      "type": "canonical",
+      "children": [
+        {
+          "id": "shipment-queue",
+          "label": "Shipment Queue",
+          "icon": "pi-list",
+          "type": "canonical"
+        }
+      ]
+    },
+    {
+      "id": "reports",
+      "label": "Reports",
+      "icon": "pi-chart-bar",
+      "type": "canonical",
+      "children": [
+        {
+          "id": "report-inventory",
+          "label": "Inventory Report",
+          "icon": "pi-file",
+          "type": "canonical"
+        },
+        {
+          "id": "legacy-reports",
+          "label": "Legacy Reports",
+          "icon": "pi-external-link",
+          "type": "federated"
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "icon": "pi-cog",
+      "type": "canonical"
+    }
+  ]
+}

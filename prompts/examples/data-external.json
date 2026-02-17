@@ -1,0 +1,37 @@
+{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "product_code": "ABC-123",
+        "product_name": "Widget Pro 3000",
+        "warehouse": {
+          "code": "warehouse-a",
+          "name": "Warehouse A"
+        },
+        "qty_on_hand": 150,
+        "qty_reserved": 50,
+        "qty_available": 100,
+        "updated_at": "2026-02-15T14:30:00.000Z"
+      },
+      {
+        "product_code": "DEF-456",
+        "product_name": "Gadget Ultra",
+        "warehouse": {
+          "code": "warehouse-b",
+          "name": "Warehouse B"
+        },
+        "qty_on_hand": 25,
+        "qty_reserved": 20,
+        "qty_available": 5,
+        "updated_at": "2026-02-16T09:15:00.000Z"
+      }
+    ],
+    "pagination": {
+      "total": 2,
+      "page": 1,
+      "per_page": 25
+    }
+  },
+  "execution_ms": 87
+}

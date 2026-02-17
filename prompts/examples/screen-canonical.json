@@ -1,0 +1,225 @@
+{
+  "screenId": "inventory-search",
+  "schemaVersion": "1.0",
+  "type": "canonical",
+  "title": "Inventory Search",
+  "icon": "pi-search",
+  
+  "form": {
+    "fields": [
+      {
+        "key": "sku",
+        "type": "input",
+        "label": "SKU",
+        "placeholder": "Enter SKU or use wildcards (ABC*)",
+        "required": false
+      },
+      {
+        "key": "description",
+        "type": "input",
+        "label": "Description",
+        "placeholder": "Item description"
+      },
+      {
+        "key": "location",
+        "type": "dropdown",
+        "label": "Location",
+        "options": [
+          { "value": "", "label": "All Locations" },
+          { "value": "warehouse-a", "label": "Warehouse A" },
+          { "value": "warehouse-b", "label": "Warehouse B" },
+          { "value": "store-001", "label": "Store 001" }
+        ]
+      },
+      {
+        "key": "status",
+        "type": "radio",
+        "label": "Status",
+        "defaultValue": "all",
+        "options": [
+          { "value": "all", "label": "All" },
+          { "value": "available", "label": "Available" },
+          { "value": "reserved", "label": "Reserved" },
+          { "value": "depleted", "label": "Depleted" }
+        ]
+      }
+    ],
+    "layout": "grid",
+    "submitLabel": "Search",
+    "resetLabel": "Clear",
+    "collapsible": true,
+    "expandLabel": "Modify"
+  },
+  
+  "grid": {
+    "columns": [
+      {
+        "field": "sku",
+        "header": "SKU",
+        "type": "text",
+        "width": 120,
+        "sortable": true,
+        "filterable": true
+      },
+      {
+        "field": "description",
+        "header": "Description",
+        "type": "text",
+        "width": 250,
+        "sortable": true,
+        "filterable": true
+      },
+      {
+        "field": "location",
+        "header": "Location",
+        "type": "text",
+        "width": 150,
+        "sortable": true
+      },
+      {
+        "field": "quantity",
+        "header": "Qty",
+        "type": "number",
+        "width": 100,
+        "sortable": true
+      },
+      {
+        "field": "reserved",
+        "header": "Reserved",
+        "type": "number",
+        "width": 100
+      },
+      {
+        "field": "available",
+        "header": "Available",
+        "type": "number",
+        "width": 100
+      },
+      {
+        "field": "lastUpdated",
+        "header": "Last Updated",
+        "type": "date",
+        "format": "MM/DD/YYYY",
+        "width": 150,
+        "sortable": true
+      }
+    ],
+    "selectionMode": "multiple",
+    "pagination": true,
+    "pageSize": 25,
+    "sortable": true,
+    "filterable": true
+  },
+  
+  "actions": [
+    {
+      "actionId": "adjust-quantity",
+      "label": "Adjust Quantity",
+      "icon": "pi-pencil",
+      "variant": "primary",
+      "requiresSelection": true,
+      "minSelection": 1,
+      "prompt": {
+        "fields": [
+          {
+            "key": "adjustment",
+            "type": "number",
+            "label": "Adjustment",
+            "placeholder": "+/- quantity",
+            "required": true
+          },
+          {
+            "key": "reason",
+            "type": "dropdown",
+            "label": "Reason",
+            "required": true,
+            "options": [
+              { "value": "cycle-count", "label": "Cycle Count" },
+              { "value": "damage", "label": "Damage" },
+              { "value": "correction", "label": "Correction" },
+              { "value": "other", "label": "Other" }
+            ]
+          },
+          {
+            "key": "notes",
+            "type": "textarea",
+            "label": "Notes",
+            "placeholder": "Optional notes"
+          }
+        ]
+      },
+      "confirmMessage": "Adjust quantity for selected items?"
+    },
+    {
+      "actionId": "transfer-inventory",
+      "label": "Transfer",
+      "icon": "pi-arrow-right",
+      "variant": "secondary",
+      "requiresSelection": true,
+      "minSelection": 1,
+      "maxSelection": 10,
+      "prompt": {
+        "fields": [
+          {
+            "key": "targetLocation",
+            "type": "dropdown",
+            "label": "Target Location",
+            "required": true,
+            "options": [
+              { "value": "warehouse-a", "label": "Warehouse A" },
+              { "value": "warehouse-b", "label": "Warehouse B" },
+              { "value": "store-001", "label": "Store 001" }
+            ]
+          },
+          {
+            "key": "quantity",
+            "type": "number",
+            "label": "Quantity",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "actionId": "export-results",
+      "label": "Export",
+      "icon": "pi-download",
+      "variant": "secondary",
+      "requiresSelection": false
+    }
+  ],
+  
+  "childLinks": [
+    {
+      "childScreenId": "item-details",
+      "label": "View Details",
+      "icon": "pi-eye",
+      "contextMapping": {
+        "itemSku": "sku",
+        "itemLocation": "location"
+      },
+      "openBehavior": "tab"
+    }
+  ],
+  
+  "rules": [
+    {
+      "id": "highlight-depleted",
+      "condition": "available <= 0",
+      "effect": "rowStyle",
+      "style": {
+        "backgroundColor": "#fee",
+        "color": "#c00"
+      }
+    },
+    {
+      "id": "highlight-low-stock",
+      "condition": "available > 0 and available < 10",
+      "effect": "rowStyle",
+      "style": {
+        "backgroundColor": "#ffc",
+        "color": "#660"
+      }
+    }
+  ]
+}

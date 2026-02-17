@@ -1,0 +1,28 @@
+{
+  "screenId": "legacy-reports",
+  "schemaVersion": "1.0",
+  "type": "federated",
+  "title": "Legacy Reports System",
+  "icon": "pi-external-link",
+  
+  "urlTemplate": "https://legacy-reports.example.com/reports?user={{userId}}&report={{reportId}}",
+  
+  "parameterBindings": {
+    "userId": "currentUserId",
+    "reportId": "selectedReportId"
+  },
+  
+  "allowExternalOpen": true,
+  
+  "sandbox": [
+    "allow-same-origin",
+    "allow-scripts",
+    "allow-forms"
+  ],
+  
+  "metadata": {
+    "description": "Legacy reporting system embedded in workspace",
+    "maintainer": "legacy-team@example.com",
+    "deprecationDate": "2027-12-31"
+  }
+}

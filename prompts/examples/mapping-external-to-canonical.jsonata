@@ -1,0 +1,15 @@
+{
+  "rows": data.items[].{
+    "sku": product_code,
+    "description": product_name,
+    "location": warehouse.name,
+    "quantity": qty_on_hand,
+    "reserved": qty_reserved,
+    "available": qty_available,
+    "lastUpdated": updated_at
+  },
+  "meta": {
+    "totalCount": data.pagination.total,
+    "executionTime": execution_ms
+  }
+}

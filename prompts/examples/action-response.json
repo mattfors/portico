@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "message": "3 items adjusted successfully",
+  "meta": {
+    "itemsAffected": 3,
+    "timestamp": "2026-02-17T10:30:00Z"
+  },
+  "refreshHint": {
+    "requeryScreen": true
+  }
+}

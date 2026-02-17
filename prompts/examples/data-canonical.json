@@ -1,0 +1,54 @@
+{
+  "rows": [
+    {
+      "sku": "ABC-123",
+      "description": "Widget Pro 3000",
+      "location": "Warehouse A",
+      "quantity": 150,
+      "reserved": 50,
+      "available": 100,
+      "lastUpdated": "2026-02-15T14:30:00Z"
+    },
+    {
+      "sku": "ABC-124",
+      "description": "Widget Pro 3000 (Blue)",
+      "location": "Warehouse A",
+      "quantity": 75,
+      "reserved": 30,
+      "available": 45,
+      "lastUpdated": "2026-02-15T14:30:00Z"
+    },
+    {
+      "sku": "DEF-456",
+      "description": "Gadget Ultra",
+      "location": "Warehouse B",
+      "quantity": 25,
+      "reserved": 20,
+      "available": 5,
+      "lastUpdated": "2026-02-16T09:15:00Z"
+    },
+    {
+      "sku": "DEF-457",
+      "description": "Gadget Ultra (Large)",
+      "location": "Warehouse B",
+      "quantity": 10,
+      "reserved": 10,
+      "available": 0,
+      "lastUpdated": "2026-02-16T09:15:00Z"
+    },
+    {
+      "sku": "GHI-789",
+      "description": "Doohickey Standard",
+      "location": "Store 001",
+      "quantity": 200,
+      "reserved": 0,
+      "available": 200,
+      "lastUpdated": "2026-02-17T08:00:00Z"
+    }
+  ],
+  "meta": {
+    "totalCount": 5,
+    "messages": [],
+    "executionTime": 45
+  }
+}
