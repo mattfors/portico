@@ -4,3 +4,80 @@
 /* Dockview */
 @import 'dockview-core/dist/styles/dockview.css';
 
+/* Dockview customizations to match PrimeNG Aura theme */
+.dockview-theme-abyss {
+  /* Override default theme to match PrimeNG */
+  --dv-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --dv-font-size: 14px;
+  --dv-font-weight: 400;
+  
+  /* Colors to match PrimeNG Aura theme */
+  --dv-background-color: #ffffff;
+  --dv-activegroup-visiblepanel-tab-background-color: #ffffff;
+  --dv-activegroup-visiblepanel-tab-color: #334155;
+  --dv-group-view-background-color: #ffffff;
+  --dv-tabs-and-actions-container-background-color: #f8fafc;
+  --dv-tabs-and-actions-container-color: #334155;
+  --dv-separator-border: #e2e8f0;
+  --dv-tab-divider-color: #e2e8f0;
+  --dv-activegroup-visiblepanel-tab-border-bottom-color: #10b981;
+  
+  font-family: var(--dv-font-family);
+  font-size: var(--dv-font-size);
+  
+  /* Tab styling */
+  .dv-default-tab {
+    font-family: var(--dv-font-family);
+    font-size: var(--dv-font-size);
+    font-weight: 500;
+    height: 36px;
+    padding: 0 12px;
+    color: #64748b;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    
+    &.dv-active-tab {
+      color: #334155;
+      background-color: #ffffff;
+      border-bottom-color: #10b981;
+      font-weight: 600;
+    }
+    
+    &:hover:not(.dv-active-tab) {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+  }
+  
+  /* Tab content area */
+  .dv-default-tab-content {
+    font-family: var(--dv-font-family);
+    color: #334155;
+  }
+  
+  /* Tabs container */
+  .dv-tabs-and-actions-container {
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    font-family: var(--dv-font-family);
+  }
+  
+  /* Content area */
+  .dv-content-container {
+    background-color: #ffffff;
+    color: #334155;
+    font-family: var(--dv-font-family);
+  }
+  
+  /* Group view */
+  .dv-groupview {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+  }
+  
+  /* Separator/splitter styling */
+  .dv-separator-border {
+    background-color: #e2e8f0;
+  }
+}
+

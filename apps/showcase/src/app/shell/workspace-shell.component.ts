@@ -62,7 +62,7 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
       {
         label: 'Inventory',
         icon: 'pi pi-box',
-        expanded: true,
+        expanded: false,
         children: [
           {
             label: 'SKU Search',
