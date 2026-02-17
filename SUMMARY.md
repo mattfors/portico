@@ -82,7 +82,7 @@ Each category has detailed templates and examples:
 
 #### Angular Configuration
 - **angular.json** - Angular CLI configuration with OnPush defaults
-- **package.json** - Dependencies for Angular 17 project
+- **package.json** - Dependencies for Angular 19 project (with security patches)
 - **tsconfig.json** - Strict TypeScript configuration with path aliases
 
 #### Development Environment

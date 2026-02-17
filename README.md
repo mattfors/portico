@@ -34,7 +34,7 @@ portico/
 
 - Node.js (v18 or higher)
 - npm (v9 or higher)
-- Angular CLI (v17 or higher)
+- Angular CLI (v19 or higher)
 
 ### Installation
 

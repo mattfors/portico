@@ -47,7 +47,7 @@ create a reusable button component following all the specifications
 Start your conversation with:
 
 ```
-I'm working on an Angular 17 application using TypeScript strict mode.
+I'm working on an Angular 19 application using TypeScript strict mode.
 The project follows these conventions:
 - OnPush change detection by default
 - SCSS with BEM methodology
@@ -89,7 +89,7 @@ traditional observables?
 
 **Add to your prompts**:
 
-1. **Specify versions**: "Angular 17", "TypeScript 5.2"
+1. **Specify versions**: "Angular 19", "TypeScript 5.2"
 2. **Name conventions**: "Use camelCase for properties, PascalCase for classes"
 3. **Import paths**: "Use path aliases like @shared/components"
 4. **Style guide**: "Follow Angular style guide"
