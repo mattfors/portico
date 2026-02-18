@@ -5,7 +5,8 @@
 @import 'dockview-core/dist/styles/dockview.css';
 
 /* Dockview theme abstraction to match PrimeNG Aura theme */
-/* Uses dockview's built-in light/dark themes with PrimeNG color overrides */
+/* Strategy: Use dockview-theme-light as base for its proper tab styling,
+   then override colors with PrimeNG tokens for both light and dark modes */
 
 /* Light mode - use dockview-theme-light with PrimeNG colors */
 .dockview-theme-light {
@@ -26,7 +27,8 @@
   font-family: var(--p-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
 }
 
-/* Dark mode - use dockview-theme-dark with PrimeNG colors */
+/* Dark mode - override dockview-theme-light colors with dark PrimeNG tokens */
+/* We keep using .dockview-theme-light class but override its colors for dark mode */
 .app-dark .dockview-theme-light {
   /* Switch to dark theme colors when app is in dark mode */
   --dv-group-view-background-color: var(--p-content-background, #1e1e1e);
