@@ -40,6 +40,10 @@ import { WorkspaceShellComponent } from './shell/workspace-shell.component';
     providePrimeNG({
       theme: {
         preset: Aura,
+        options: {
+          darkModeSelector: 'system',
+          cssLayer: false
+        }
       },
     }),
   ],

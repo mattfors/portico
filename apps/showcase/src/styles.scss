@@ -4,3 +4,24 @@
 /* Dockview */
 @import 'dockview-core/dist/styles/dockview.css';
 
+/* Dockview dark theme with PrimeNG Aura dark colors */
+/* Use dockview-theme-dark as base and override with PrimeNG tokens */
+
+.dockview-theme-dark {
+  /* Override dockview dark theme colors with PrimeNG dark tokens */
+  --dv-group-view-background-color: var(--p-content-background, #1e1e1e);
+  --dv-tabs-and-actions-container-background-color: var(--p-surface-800, #252526);
+  --dv-activegroup-visiblepanel-tab-background-color: var(--p-content-background, #1e1e1e);
+  --dv-activegroup-hiddenpanel-tab-background-color: var(--p-surface-700, #2d2d2d);
+  --dv-inactivegroup-visiblepanel-tab-background-color: var(--p-content-background, #1e1e1e);
+  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--p-surface-700, #2d2d2d);
+  --dv-tab-divider-color: var(--p-content-border-color, #1e1e1e);
+  --dv-activegroup-visiblepanel-tab-color: var(--p-text-color, white);
+  --dv-activegroup-hiddenpanel-tab-color: var(--p-text-muted-color, #969696);
+  --dv-inactivegroup-visiblepanel-tab-color: var(--p-text-muted-color, #8f8f8f);
+  --dv-inactivegroup-hiddenpanel-tab-color: var(--p-text-muted-color, #626262);
+  --dv-separator-border: var(--p-content-border-color, rgb(68, 68, 68));
+  
+  font-family: var(--p-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
+}
+

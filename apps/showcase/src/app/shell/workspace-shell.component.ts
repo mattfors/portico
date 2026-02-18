@@ -44,6 +44,8 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngOnInit(): void {
     this.initializeMenu();
+    // Always apply dark mode
+    this.applyDarkMode();
   }
 
   ngAfterViewInit(): void {
@@ -62,7 +64,7 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
       {
         label: 'Inventory',
         icon: 'pi pi-box',
-        expanded: true,
+        expanded: false,
         children: [
           {
             label: 'SKU Search',
@@ -142,6 +144,9 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
         }
       );
       this.dockviewApi = this.dockviewComponent.api;
+
+      // Apply dark mode theme after initialization
+      this.applyDarkMode();
 
       // Add welcome tab
       this.addWelcomeTab();
@@ -273,5 +278,24 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
   clearSearch(): void {
     this.searchText = '';
     this.initializeMenu();
+  }
+
+  private applyDarkMode(): void {
+    // Force dark mode by setting color-scheme on html element for PrimeNG
+    const htmlElement = document.documentElement;
+    htmlElement.style.colorScheme = 'dark';
+    htmlElement.classList.add('app-dark');
+    
+    // Apply dockview dark theme
+    const dockviewContainer = document.getElementById('dockview-container');
+    if (dockviewContainer) {
+      // Remove any existing theme classes
+      dockviewContainer.className = dockviewContainer.className
+        .split(' ')
+        .filter(c => !c.startsWith('dockview-theme-'))
+        .join(' ');
+      // Use dockview dark theme
+      dockviewContainer.classList.add('dockview-theme-dark');
+    }
   }
 }
