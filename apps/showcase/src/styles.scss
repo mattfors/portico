@@ -4,33 +4,11 @@
 /* Dockview */
 @import 'dockview-core/dist/styles/dockview.css';
 
-/* Dockview theme abstraction to match PrimeNG Aura theme */
-/* Strategy: Use dockview-theme-light as base for its proper tab styling,
-   then override colors with PrimeNG tokens for both light and dark modes */
+/* Dockview dark theme with PrimeNG Aura dark colors */
+/* Use dockview-theme-dark as base and override with PrimeNG tokens */
 
-/* Light mode - use dockview-theme-light with PrimeNG colors */
-.dockview-theme-light {
-  /* Override dockview light theme colors with PrimeNG tokens */
-  --dv-group-view-background-color: var(--p-content-background, white);
-  --dv-tabs-and-actions-container-background-color: var(--p-surface-50, #f3f3f3);
-  --dv-activegroup-visiblepanel-tab-background-color: var(--p-content-background, white);
-  --dv-activegroup-hiddenpanel-tab-background-color: var(--p-surface-100, #ececec);
-  --dv-inactivegroup-visiblepanel-tab-background-color: var(--p-content-background, white);
-  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--p-surface-100, #ececec);
-  --dv-tab-divider-color: var(--p-content-border-color, rgba(128, 128, 128, 0.35));
-  --dv-activegroup-visiblepanel-tab-color: var(--p-text-color, rgb(51, 51, 51));
-  --dv-activegroup-hiddenpanel-tab-color: var(--p-text-muted-color, rgba(51, 51, 51, 0.7));
-  --dv-inactivegroup-visiblepanel-tab-color: var(--p-text-muted-color, rgba(51, 51, 51, 0.7));
-  --dv-inactivegroup-hiddenpanel-tab-color: var(--p-text-muted-color, rgba(51, 51, 51, 0.35));
-  --dv-separator-border: var(--p-content-border-color, rgba(128, 128, 128, 0.35));
-  
-  font-family: var(--p-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
-}
-
-/* Dark mode - override dockview-theme-light colors with dark PrimeNG tokens */
-/* We keep using .dockview-theme-light class but override its colors for dark mode */
-.app-dark .dockview-theme-light {
-  /* Switch to dark theme colors when app is in dark mode */
+.dockview-theme-dark {
+  /* Override dockview dark theme colors with PrimeNG dark tokens */
   --dv-group-view-background-color: var(--p-content-background, #1e1e1e);
   --dv-tabs-and-actions-container-background-color: var(--p-surface-800, #252526);
   --dv-activegroup-visiblepanel-tab-background-color: var(--p-content-background, #1e1e1e);
@@ -43,5 +21,7 @@
   --dv-inactivegroup-visiblepanel-tab-color: var(--p-text-muted-color, #8f8f8f);
   --dv-inactivegroup-hiddenpanel-tab-color: var(--p-text-muted-color, #626262);
   --dv-separator-border: var(--p-content-border-color, rgb(68, 68, 68));
+  
+  font-family: var(--p-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
 }
 

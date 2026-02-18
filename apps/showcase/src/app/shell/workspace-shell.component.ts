@@ -39,13 +39,13 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
   menuItems: TreeNode[] = [];
   searchText = '';
   sidebarCollapsed = false;
-  isDarkMode = false;
   private dockviewApi?: DockviewApi;
   private dockviewComponent?: DockviewComponent;
 
   ngOnInit(): void {
     this.initializeMenu();
-    this.loadThemePreference();
+    // Always apply dark mode
+    this.applyDarkMode();
   }
 
   ngAfterViewInit(): void {
@@ -145,8 +145,8 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
       );
       this.dockviewApi = this.dockviewComponent.api;
 
-      // Apply theme after initialization
-      this.applyTheme();
+      // Apply dark mode theme after initialization
+      this.applyDarkMode();
 
       // Add welcome tab
       this.addWelcomeTab();
@@ -280,41 +280,20 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
     this.initializeMenu();
   }
 
-  toggleDarkMode(): void {
-    this.isDarkMode = !this.isDarkMode;
-    this.applyTheme();
-    this.saveThemePreference();
-  }
-
-  private loadThemePreference(): void {
-    const savedTheme = localStorage.getItem('theme');
-    this.isDarkMode = savedTheme === 'dark';
-    this.applyTheme();
-  }
-
-  private saveThemePreference(): void {
-    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
-  }
-
-  private applyTheme(): void {
-    const element = document.documentElement;
+  private applyDarkMode(): void {
+    // Always use dark mode - apply to html element for PrimeNG
+    document.documentElement.classList.add('app-dark');
+    
+    // Apply dockview dark theme
     const dockviewContainer = document.getElementById('dockview-container');
-    
-    if (this.isDarkMode) {
-      element.classList.add('app-dark');
-    } else {
-      element.classList.remove('app-dark');
-    }
-    
-    // Apply dockview theme class - always use light theme, CSS handles dark mode
     if (dockviewContainer) {
       // Remove any existing theme classes
       dockviewContainer.className = dockviewContainer.className
         .split(' ')
         .filter(c => !c.startsWith('dockview-theme-'))
         .join(' ');
-      // Add light theme class - our CSS will handle dark mode override
-      dockviewContainer.classList.add('dockview-theme-light');
+      // Use dockview dark theme
+      dockviewContainer.classList.add('dockview-theme-dark');
     }
   }
 }
