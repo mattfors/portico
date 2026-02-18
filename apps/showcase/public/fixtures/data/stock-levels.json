@@ -1,0 +1,10 @@
+{
+  "rows": [
+    { "sku": "A100-01", "location": "DC-ATL", "onHand": 128, "available": 92 },
+    { "sku": "A100-02", "location": "DC-DFW", "onHand": 77, "available": 64 },
+    { "sku": "B200-11", "location": "DC-SEA", "onHand": 14, "available": 10 }
+  ],
+  "meta": {
+    "total": 3
+  }
+}

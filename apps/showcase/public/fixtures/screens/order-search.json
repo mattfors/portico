@@ -1,0 +1,13 @@
+{
+  "id": "order-search",
+  "title": "Order Search",
+  "kind": "canonical",
+  "grid": {
+    "columns": [
+      { "field": "orderNo", "headerName": "Order #" },
+      { "field": "customer", "headerName": "Customer" },
+      { "field": "date", "headerName": "Order Date" },
+      { "field": "status", "headerName": "Status" }
+    ]
+  }
+}

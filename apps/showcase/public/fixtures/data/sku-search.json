@@ -1,0 +1,10 @@
+{
+  "rows": [
+    { "sku": "A100-01", "description": "Widget Alpha", "uom": "EA", "status": "Active" },
+    { "sku": "A100-02", "description": "Widget Beta", "uom": "EA", "status": "Active" },
+    { "sku": "B200-11", "description": "Gasket Large", "uom": "PK", "status": "Inactive" }
+  ],
+  "meta": {
+    "total": 3
+  }
+}

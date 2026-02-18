@@ -1,0 +1,13 @@
+{
+  "id": "sku-search",
+  "title": "SKU Search",
+  "kind": "canonical",
+  "grid": {
+    "columns": [
+      { "field": "sku", "headerName": "SKU" },
+      { "field": "description", "headerName": "Description" },
+      { "field": "uom", "headerName": "UOM" },
+      { "field": "status", "headerName": "Status" }
+    ]
+  }
+}
