@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
-import { definePreset } from '@primeuix/themes';
 
 // PrimeNG Modules
 import { TreeModule } from 'primeng/tree';
