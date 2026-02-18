@@ -281,8 +281,10 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   private applyDarkMode(): void {
-    // Always use dark mode - apply to html element for PrimeNG
-    document.documentElement.classList.add('app-dark');
+    // Force dark mode by setting color-scheme on html element for PrimeNG
+    const htmlElement = document.documentElement;
+    htmlElement.style.colorScheme = 'dark';
+    htmlElement.classList.add('app-dark');
     
     // Apply dockview dark theme
     const dockviewContainer = document.getElementById('dockview-container');
