@@ -41,7 +41,6 @@ import { WorkspaceShellComponent } from './shell/workspace-shell.component';
       theme: {
         preset: Aura,
         options: {
-          prefix: 'p',
           darkModeSelector: 'system',
           cssLayer: false
         }
