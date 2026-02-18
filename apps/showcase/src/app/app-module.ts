@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { provideHttpClient } from '@angular/common/http';
 
 // PrimeNG Modules
 import { TreeModule } from 'primeng/tree';
@@ -18,6 +19,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { App } from './app';
 import { appRoutes } from './app.routes';
 import { WorkspaceShellComponent } from './shell/workspace-shell.component';
+import { providePorticoRuntime } from './portico/provider';
 
 @NgModule({
   declarations: [App, WorkspaceShellComponent],
@@ -37,6 +39,10 @@ import { WorkspaceShellComponent } from './shell/workspace-shell.component';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideHttpClient(),
+    ...providePorticoRuntime({
+      fixtureBaseUrl: '/fixtures',
+    }),
     providePrimeNG({
       theme: {
         preset: Aura,

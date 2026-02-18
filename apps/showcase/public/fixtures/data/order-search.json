@@ -1,0 +1,10 @@
+{
+  "rows": [
+    { "orderNo": "5001001", "customer": "Northwind", "date": "2026-01-12", "status": "Released" },
+    { "orderNo": "5001002", "customer": "Apex Retail", "date": "2026-01-13", "status": "Picking" },
+    { "orderNo": "5001003", "customer": "Blue Sun", "date": "2026-01-14", "status": "Shipped" }
+  ],
+  "meta": {
+    "total": 3
+  }
+}

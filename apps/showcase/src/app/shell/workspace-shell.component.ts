@@ -1,33 +1,18 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import {
-  DockviewComponent,
-  DockviewApi,
-  IDockviewPanelProps,
-  IContentRenderer,
-} from 'dockview-core';
+  ApplicationRef,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  AfterViewInit,
+  EnvironmentInjector,
+} from '@angular/core';
+import { DockviewApi, DockviewComponent } from 'dockview-core';
 import { TreeNode } from 'primeng/api';
-
-// Simple content renderer for tabs
-class DefaultPanelRenderer implements IContentRenderer {
-  private _element: HTMLElement;
-
-  constructor(private content: string) {
-    this._element = document.createElement('div');
-    this._element.innerHTML = content;
-  }
-
-  get element(): HTMLElement {
-    return this._element;
-  }
-
-  init(params: IDockviewPanelProps): void {
-    // Nothing to initialize
-  }
-
-  dispose(): void {
-    this._element.remove();
-  }
-}
+import { PORTICO_PROVIDER } from '../portico/provider';
+import { PorticoProvider } from '../portico/contracts';
+import { ScreenPanelComponent } from '../screens/screen-panel.component';
+import { AngularPanelRenderer } from './angular-panel-renderer';
 
 @Component({
   selector: 'app-workspace-shell',
@@ -37,13 +22,21 @@ class DefaultPanelRenderer implements IContentRenderer {
 })
 export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit {
   menuItems: TreeNode[] = [];
+  private allMenuItems: TreeNode[] = [];
   searchText = '';
   sidebarCollapsed = false;
+
   private dockviewApi?: DockviewApi;
   private dockviewComponent?: DockviewComponent;
 
-  ngOnInit(): void {
-    this.initializeMenu();
+  constructor(
+    @Inject(PORTICO_PROVIDER) private readonly provider: PorticoProvider,
+    private readonly environmentInjector: EnvironmentInjector,
+    private readonly appRef: ApplicationRef
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    await this.initializeMenu();
   }
 
   ngAfterViewInit(): void {
@@ -51,195 +44,98 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnDestroy(): void {
-    if (this.dockviewComponent) {
-      this.dockviewComponent.dispose();
-    }
+    this.dockviewComponent?.dispose();
   }
 
-  private initializeMenu(): void {
-    // Load placeholder menu items matching examples/menu.json structure
-    this.menuItems = [
-      {
-        label: 'Inventory',
-        icon: 'pi pi-box',
+  private async initializeMenu(): Promise<void> {
+    const structure = await this.provider.getMenuStructure();
+    this.allMenuItems = this.mapToTreeNodes(structure.items);
+    this.menuItems = this.cloneTreeNodes(this.allMenuItems);
+  }
+
+  private mapToTreeNodes(items: Array<Record<string, unknown>>): TreeNode[] {
+    return items.map((item) => {
+      const children = Array.isArray(item['children'])
+        ? this.mapToTreeNodes(item['children'] as Array<Record<string, unknown>>)
+        : undefined;
+
+      return {
+        key: String(item['id']),
+        label: String(item['label']),
+        icon: typeof item['icon'] === 'string' ? item['icon'] : undefined,
         expanded: true,
-        children: [
-          {
-            label: 'SKU Search',
-            icon: 'pi pi-search',
-            data: { screenId: 'sku-search' },
-          },
-          {
-            label: 'Stock Levels',
-            icon: 'pi pi-chart-bar',
-            data: { screenId: 'stock-levels' },
-          },
-        ],
-      },
-      {
-        label: 'Orders',
-        icon: 'pi pi-shopping-cart',
-        expanded: false,
-        children: [
-          {
-            label: 'Order Search',
-            icon: 'pi pi-search',
-            data: { screenId: 'order-search' },
-          },
-          {
-            label: 'Create Order',
-            icon: 'pi pi-plus',
-            data: { screenId: 'create-order' },
-          },
-        ],
-      },
-      {
-        label: 'Shipping',
-        icon: 'pi pi-truck',
-        expanded: false,
-        children: [
-          {
-            label: 'Shipment Tracking',
-            icon: 'pi pi-map-marker',
-            data: { screenId: 'shipment-tracking' },
-          },
-        ],
-      },
-      {
-        label: 'Reports',
-        icon: 'pi pi-file',
-        expanded: false,
-        children: [
-          {
-            label: 'Inventory Report',
-            icon: 'pi pi-file-pdf',
-            data: { screenId: 'inventory-report' },
-          },
-          {
-            label: 'Sales Report',
-            icon: 'pi pi-file-excel',
-            data: { screenId: 'sales-report' },
-          },
-        ],
-      },
-    ];
+        data: item['screenId'] ? { screenId: String(item['screenId']) } : undefined,
+        children,
+      } as TreeNode;
+    });
+  }
+
+  private cloneTreeNodes(items: TreeNode[]): TreeNode[] {
+    return items.map((item) => ({
+      ...item,
+      children: item.children ? this.cloneTreeNodes(item.children) : undefined,
+    }));
   }
 
   private initializeDockview(): void {
     const container = document.getElementById('dockview-container');
     if (!container) {
-      console.error('Dockview container not found');
       return;
     }
 
-    try {
-      this.dockviewComponent = new DockviewComponent(
-        container,
-        {
-          createComponent: (options: any) => {
-            return new DefaultPanelRenderer(options.content || '');
-          },
-        }
-      );
-      this.dockviewApi = this.dockviewComponent.api;
+    this.dockviewComponent = new DockviewComponent(container, {
+      createComponent: (options: { params?: { screenId?: string; title?: string } }) => {
+        return new AngularPanelRenderer(
+          ScreenPanelComponent,
+          this.environmentInjector,
+          this.appRef,
+          {
+            screenId: options.params?.screenId ?? '',
+            title: options.params?.title ?? '',
+          }
+        );
+      },
+    });
 
-      // Add welcome tab
-      this.addWelcomeTab();
-    } catch (error) {
-      console.error('Failed to initialize Dockview:', error);
-    }
-  }
-
-  private addWelcomeTab(): void {
-    if (!this.dockviewApi) return;
-
-    try {
-      this.dockviewApi.addPanel({
-        id: 'welcome',
-        component: 'default',
-        title: 'Welcome',
-        params: {
-          content: `
-            <div style="padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;">
-              <h2 style="color: #4CAF50; margin-bottom: 16px;">Welcome to Portico</h2>
-              <p style="color: #cccccc; line-height: 1.6;">
-                Select an item from the left sidebar to open a screen.
-              </p>
-              <ul style="color: #cccccc; margin-top: 12px; line-height: 1.8;">
-                <li>Use the search box to filter menu items</li>
-                <li>Click on any menu item to open it in a new tab</li>
-                <li>Tabs can be dragged, split, and rearranged</li>
-              </ul>
-            </div>
-          `,
-        },
-      });
-    } catch (error) {
-      console.error('Failed to add welcome tab:', error);
-    }
+    this.dockviewApi = this.dockviewComponent.api;
   }
 
   onNodeSelect(event: { node: TreeNode }): void {
     const node = event.node;
-    if (!node.children && node.data) {
-      this.openScreen(node.data.screenId, node.label || 'Untitled');
+    const screenId = node.data?.['screenId'];
+
+    if (!node.children?.length && typeof screenId === 'string') {
+      this.openScreen(screenId, node.label || 'Untitled');
     }
   }
 
   private openScreen(screenId: string, title: string): void {
-    if (!this.dockviewApi) return;
-
-    try {
-      // Check if tab already exists
-      const existingPanel = this.dockviewApi.panels.find(
-        (panel) => panel.id === screenId
-      );
-
-      if (existingPanel) {
-        existingPanel.api.setActive();
-        return;
-      }
-
-      // Create new tab
-      this.dockviewApi.addPanel({
-        id: screenId,
-        component: 'default',
-        title: title,
-        params: {
-          content: `
-            <div style="padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;">
-              <h3 style="color: #2196F3; margin-bottom: 16px;">${title}</h3>
-              <p style="color: #cccccc;">Screen ID: <code style="background: #2d2d2d; padding: 2px 6px; border-radius: 3px;">${screenId}</code></p>
-              <p style="color: #888; margin-top: 12px; font-style: italic;">
-                Screen content will be rendered here based on the canonical contract.
-              </p>
-            </div>
-          `,
-        },
-      });
-
-      // Activate the newly created panel
-      const newPanel = this.dockviewApi.panels.find(
-        (panel) => panel.id === screenId
-      );
-      if (newPanel) {
-        newPanel.api.setActive();
-      }
-    } catch (error) {
-      console.error('Failed to open screen:', error);
+    if (!this.dockviewApi) {
+      return;
     }
+
+    const existingPanel = this.dockviewApi.panels.find((panel) => panel.id === screenId);
+    if (existingPanel) {
+      existingPanel.api.setActive();
+      return;
+    }
+
+    this.dockviewApi.addPanel({
+      id: screenId,
+      component: 'screen',
+      title,
+      params: { screenId, title },
+    });
   }
 
   onSearch(): void {
-    // Simple client-side search filter
     if (!this.searchText.trim()) {
-      this.initializeMenu(); // Reset to full menu
+      this.menuItems = this.cloneTreeNodes(this.allMenuItems);
       return;
     }
 
     const searchLower = this.searchText.toLowerCase();
-    const filtered = this.filterMenuItems(this.menuItems, searchLower);
-    this.menuItems = filtered;
+    this.menuItems = this.filterMenuItems(this.allMenuItems, searchLower);
   }
 
   private filterMenuItems(items: TreeNode[], search: string): TreeNode[] {
@@ -247,23 +143,17 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
 
     for (const item of items) {
       const labelMatch = item.label?.toLowerCase().includes(search);
-      const hasMatchingChildren = item.children && item.children.length > 0;
+      const filteredChildren = item.children
+        ? this.filterMenuItems(item.children, search)
+        : undefined;
+      const hasMatchingChildren = Boolean(filteredChildren && filteredChildren.length > 0);
 
       if (labelMatch || hasMatchingChildren) {
-        const newItem = { ...item };
-
-        if (item.children) {
-          const filteredChildren = this.filterMenuItems(item.children, search);
-          if (filteredChildren.length > 0) {
-            newItem.children = filteredChildren;
-            newItem.expanded = true; // Auto-expand parent with matching children
-            result.push(newItem);
-          } else if (labelMatch) {
-            result.push(newItem);
-          }
-        } else if (labelMatch) {
-          result.push(newItem);
-        }
+        result.push({
+          ...item,
+          children: filteredChildren,
+          expanded: hasMatchingChildren,
+        });
       }
     }
 
@@ -272,6 +162,6 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
 
   clearSearch(): void {
     this.searchText = '';
-    this.initializeMenu();
+    this.menuItems = this.cloneTreeNodes(this.allMenuItems);
   }
 }

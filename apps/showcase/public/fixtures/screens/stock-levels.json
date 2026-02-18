@@ -1,0 +1,13 @@
+{
+  "id": "stock-levels",
+  "title": "Stock Levels",
+  "kind": "canonical",
+  "grid": {
+    "columns": [
+      { "field": "sku", "headerName": "SKU" },
+      { "field": "location", "headerName": "Location" },
+      { "field": "onHand", "headerName": "On Hand" },
+      { "field": "available", "headerName": "Available" }
+    ]
+  }
+}

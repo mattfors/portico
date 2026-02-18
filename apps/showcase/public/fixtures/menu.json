@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "id": "inventory",
+      "label": "Inventory",
+      "icon": "pi pi-box",
+      "children": [
+        {
+          "id": "sku-search",
+          "label": "SKU Search",
+          "icon": "pi pi-search",
+          "screenId": "sku-search"
+        },
+        {
+          "id": "stock-levels",
+          "label": "Stock Levels",
+          "icon": "pi pi-chart-bar",
+          "screenId": "stock-levels"
+        }
+      ]
+    },
+    {
+      "id": "orders",
+      "label": "Orders",
+      "icon": "pi pi-shopping-cart",
+      "children": [
+        {
+          "id": "order-search",
+          "label": "Order Search",
+          "icon": "pi pi-search",
+          "screenId": "order-search"
+        }
+      ]
+    }
+  ]
+}
