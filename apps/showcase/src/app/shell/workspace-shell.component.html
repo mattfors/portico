@@ -6,13 +6,22 @@
         <i class="pi pi-box" style="color: #4caf50"></i>
         <span class="font-semibold" *ngIf="!sidebarCollapsed">Portico</span>
       </div>
-      <button
-        pButton
-        [icon]="sidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'"
-        [text]="true"
-        (click)="sidebarCollapsed = !sidebarCollapsed"
-        pTooltip="Toggle sidebar"
-      ></button>
+      <div class="flex align-items-center gap-1">
+        <button
+          pButton
+          [icon]="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"
+          [text]="true"
+          (click)="toggleDarkMode()"
+          [pTooltip]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+        ></button>
+        <button
+          pButton
+          [icon]="sidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'"
+          [text]="true"
+          (click)="sidebarCollapsed = !sidebarCollapsed"
+          pTooltip="Toggle sidebar"
+        ></button>
+      </div>
     </div>
 
     <div class="sidebar-content" *ngIf="!sidebarCollapsed">

@@ -39,11 +39,13 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
   menuItems: TreeNode[] = [];
   searchText = '';
   sidebarCollapsed = false;
+  isDarkMode = false;
   private dockviewApi?: DockviewApi;
   private dockviewComponent?: DockviewComponent;
 
   ngOnInit(): void {
     this.initializeMenu();
+    this.loadThemePreference();
   }
 
   ngAfterViewInit(): void {
@@ -273,5 +275,30 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
   clearSearch(): void {
     this.searchText = '';
     this.initializeMenu();
+  }
+
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+    this.applyTheme();
+    this.saveThemePreference();
+  }
+
+  private loadThemePreference(): void {
+    const savedTheme = localStorage.getItem('theme');
+    this.isDarkMode = savedTheme === 'dark';
+    this.applyTheme();
+  }
+
+  private saveThemePreference(): void {
+    localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+  }
+
+  private applyTheme(): void {
+    const element = document.documentElement;
+    if (this.isDarkMode) {
+      element.classList.add('app-dark');
+    } else {
+      element.classList.remove('app-dark');
+    }
   }
 }
