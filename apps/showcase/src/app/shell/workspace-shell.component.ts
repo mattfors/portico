@@ -145,6 +145,9 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
       );
       this.dockviewApi = this.dockviewComponent.api;
 
+      // Apply theme after initialization
+      this.applyTheme();
+
       // Add welcome tab
       this.addWelcomeTab();
     } catch (error) {
@@ -295,10 +298,23 @@ export class WorkspaceShellComponent implements OnInit, OnDestroy, AfterViewInit
 
   private applyTheme(): void {
     const element = document.documentElement;
+    const dockviewContainer = document.getElementById('dockview-container');
+    
     if (this.isDarkMode) {
       element.classList.add('app-dark');
     } else {
       element.classList.remove('app-dark');
+    }
+    
+    // Apply dockview theme class - always use light theme, CSS handles dark mode
+    if (dockviewContainer) {
+      // Remove any existing theme classes
+      dockviewContainer.className = dockviewContainer.className
+        .split(' ')
+        .filter(c => !c.startsWith('dockview-theme-'))
+        .join(' ');
+      // Add light theme class - our CSS will handle dark mode override
+      dockviewContainer.classList.add('dockview-theme-light');
     }
   }
 }

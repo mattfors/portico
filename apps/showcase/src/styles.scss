@@ -5,106 +5,41 @@
 @import 'dockview-core/dist/styles/dockview.css';
 
 /* Dockview theme abstraction to match PrimeNG Aura theme */
-/* Uses CSS custom properties from PrimeNG for automatic light/dark mode support */
+/* Uses dockview's built-in light/dark themes with PrimeNG color overrides */
 
-.dockview-theme-abyss {
-  /* Font configuration from PrimeNG */
-  --dv-font-family: var(--p-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
-  --dv-font-size: 14px;
-  --dv-font-weight: 400;
+/* Light mode - use dockview-theme-light with PrimeNG colors */
+.dockview-theme-light {
+  /* Override dockview light theme colors with PrimeNG tokens */
+  --dv-group-view-background-color: var(--p-content-background, white);
+  --dv-tabs-and-actions-container-background-color: var(--p-surface-50, #f3f3f3);
+  --dv-activegroup-visiblepanel-tab-background-color: var(--p-content-background, white);
+  --dv-activegroup-hiddenpanel-tab-background-color: var(--p-surface-100, #ececec);
+  --dv-inactivegroup-visiblepanel-tab-background-color: var(--p-content-background, white);
+  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--p-surface-100, #ececec);
+  --dv-tab-divider-color: var(--p-content-border-color, rgba(128, 128, 128, 0.35));
+  --dv-activegroup-visiblepanel-tab-color: var(--p-text-color, rgb(51, 51, 51));
+  --dv-activegroup-hiddenpanel-tab-color: var(--p-text-muted-color, rgba(51, 51, 51, 0.7));
+  --dv-inactivegroup-visiblepanel-tab-color: var(--p-text-muted-color, rgba(51, 51, 51, 0.7));
+  --dv-inactivegroup-hiddenpanel-tab-color: var(--p-text-muted-color, rgba(51, 51, 51, 0.35));
+  --dv-separator-border: var(--p-content-border-color, rgba(128, 128, 128, 0.35));
   
-  /* Map dockview colors to PrimeNG semantic tokens */
-  /* These will automatically switch between light and dark modes */
-  --dv-background-color: var(--p-content-background);
-  --dv-activegroup-visiblepanel-tab-background-color: var(--p-content-background);
-  --dv-activegroup-visiblepanel-tab-color: var(--p-text-color);
-  --dv-group-view-background-color: var(--p-content-background);
-  --dv-tabs-and-actions-container-background-color: var(--p-surface-50);
-  --dv-tabs-and-actions-container-color: var(--p-text-color);
-  --dv-separator-border: var(--p-content-border-color);
-  --dv-tab-divider-color: var(--p-content-border-color);
-  --dv-activegroup-visiblepanel-tab-border-bottom-color: var(--p-primary-color);
-  
-  font-family: var(--dv-font-family);
-  font-size: var(--dv-font-size);
-  color: var(--p-text-color);
-  background-color: var(--p-content-background);
-  
-  /* Tab styling - uses PrimeNG colors */
-  .dv-default-tab {
-    font-family: var(--dv-font-family);
-    font-size: var(--dv-font-size);
-    font-weight: 500;
-    height: 36px;
-    padding: 0 12px;
-    color: var(--p-text-muted-color);
-    background-color: transparent;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-    
-    &.dv-active-tab {
-      color: var(--p-text-color);
-      background-color: var(--p-content-background);
-      border-bottom-color: var(--p-primary-color);
-      font-weight: 600;
-    }
-    
-    &:hover:not(.dv-active-tab) {
-      background-color: var(--p-content-hover-background);
-      color: var(--p-text-hover-color);
-    }
-  }
-  
-  /* Tab content area */
-  .dv-default-tab-content {
-    font-family: var(--dv-font-family);
-    color: var(--p-text-color);
-  }
-  
-  /* Tabs container */
-  .dv-tabs-and-actions-container {
-    background-color: var(--p-surface-50);
-    border-bottom: 1px solid var(--p-content-border-color);
-    font-family: var(--dv-font-family);
-  }
-  
-  /* Content area */
-  .dv-content-container {
-    background-color: var(--p-content-background);
-    color: var(--p-text-color);
-    font-family: var(--dv-font-family);
-  }
-  
-  /* Group view */
-  .dv-groupview {
-    background-color: var(--p-content-background);
-    border: 1px solid var(--p-content-border-color);
-  }
-  
-  /* Separator/splitter styling */
-  .dv-separator-border {
-    background-color: var(--p-content-border-color);
-  }
-  
-  /* Sash (resize handles) */
-  .dv-sash {
-    background-color: transparent;
-    
-    &:hover,
-    &.dv-active {
-      background-color: var(--p-primary-color);
-      opacity: 0.5;
-    }
-  }
+  font-family: var(--p-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif);
 }
 
-/* Dark mode specific overrides if needed */
-.app-dark {
-  .dockview-theme-abyss {
-    /* Ensure dark mode uses appropriate surface colors */
-    .dv-tabs-and-actions-container {
-      background-color: var(--p-surface-800);
-    }
-  }
+/* Dark mode - use dockview-theme-dark with PrimeNG colors */
+.app-dark .dockview-theme-light {
+  /* Switch to dark theme colors when app is in dark mode */
+  --dv-group-view-background-color: var(--p-content-background, #1e1e1e);
+  --dv-tabs-and-actions-container-background-color: var(--p-surface-800, #252526);
+  --dv-activegroup-visiblepanel-tab-background-color: var(--p-content-background, #1e1e1e);
+  --dv-activegroup-hiddenpanel-tab-background-color: var(--p-surface-700, #2d2d2d);
+  --dv-inactivegroup-visiblepanel-tab-background-color: var(--p-content-background, #1e1e1e);
+  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--p-surface-700, #2d2d2d);
+  --dv-tab-divider-color: var(--p-content-border-color, #1e1e1e);
+  --dv-activegroup-visiblepanel-tab-color: var(--p-text-color, white);
+  --dv-activegroup-hiddenpanel-tab-color: var(--p-text-muted-color, #969696);
+  --dv-inactivegroup-visiblepanel-tab-color: var(--p-text-muted-color, #8f8f8f);
+  --dv-inactivegroup-hiddenpanel-tab-color: var(--p-text-muted-color, #626262);
+  --dv-separator-border: var(--p-content-border-color, rgb(68, 68, 68));
 }
 
